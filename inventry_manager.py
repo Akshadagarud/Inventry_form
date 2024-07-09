@@ -45,10 +45,8 @@ data = {
 
 df = pd.DataFrame(data)
 
-# Convert DataFrame to CSV
 csv = df.to_csv(index=False).encode()
 
-# Download button
 st.download_button(
     label="Download data as CSV",
     data=csv,
