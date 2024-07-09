@@ -2,11 +2,13 @@ import streamlit as st
 import pandas as pd
 import datetime as dt
 
-st.header("Inventory manager")
+st.header("Inventory Manager")
 branch_name = st.text_input("Branch Name")
-loc_col, amcid_col = st.columns(2)
-location = loc_col.text_input("Location")
-amcid = amcid_col.text_input("AMC ID")
+loc = st.text_input("Location")
+
+sr_col, user_col = st.columns(2)
+user = user_col.text_input("User Name")
+serial = sr_col.text_input("Serial No.")
 
 machine_type_col, model_name_col, model_no_col = st.columns(3)
 machine_type = machine_type_col.text_input("Machine Type")
@@ -19,12 +21,12 @@ warranty_cols = st.columns([1, 2])
 warranty_cols[0].markdown("Warranty Status")
 warranty_select = warranty_cols[1].selectbox("Is there a warranty?", ["Yes", "No"])
 
+warranty_date_input = None
 if warranty_select == "Yes":
     warranty_date_cols = st.columns([1, 2])
     warranty_date_cols[0].markdown("Warranty Date")
     warranty_date_input = warranty_date_cols[1].date_input("Warranty Date")
 else:
-    warranty_date_input = None
     st.write("No warranty. Current date: ", pd.Timestamp.now().date())
 
 uploaded_file = st.file_uploader("Upload File")
