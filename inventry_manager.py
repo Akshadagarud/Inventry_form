@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from st_supabase_connection import SupabaseConnection, execute_query
 import datetime as dt
 
 st.header("Inventory Manager")
@@ -35,7 +34,6 @@ uploaded_file = st.file_uploader("Upload File")
 if st.button("Save"):
     st.success("Data saved!")
    
-
     data = {    
         "loc": loc,
         "serial_number": serial,
