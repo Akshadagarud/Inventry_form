@@ -1,12 +1,13 @@
 import streamlit as st
 import pandas as pd
+from st_supabase_connection import SupabaseConnection, execute_query
 import datetime as dt
 
 st.header("Inventory Manager")
 branch_name = st.text_input("Branch Name")
 loc = st.text_input("Location")
 
-user_col, sr_col = st.columns(2)
+sr_col, user_col = st.columns(2)
 user = user_col.text_input("User Name")
 serial = sr_col.text_input("Serial No.")
 
@@ -30,10 +31,12 @@ else:
     st.write("No warranty. Current date: ", pd.Timestamp.now().date())
 
 uploaded_file = st.file_uploader("Upload File")
+
 if st.button("Save"):
     st.success("Data saved!")
+   
 
-data = {    
+    data = {    
         "loc": loc,
         "serial_number": serial,
         "branch_name": branch_name,
@@ -43,16 +46,15 @@ data = {
         "model_no": model_no,
         "specs": specs,
         "warranty_status": warranty_select,
-        "warranty_ends_on": warranty_date_input.isoformat() if warranty_date_input else None
+        "warranty_ends_on": warranty_date_input
     }
 
-df = pd.DataFrame(data)
-
-csv = df.to_csv(index=False).encode()
-
-st.download_button(
-    label="Download data as CSV",
-    data=csv,
-    file_name='inventory_data.csv',
-    mime='text/csv',
-)
+    df = pd.DataFrame([data])
+    csv = df.to_csv(index=False).encode()
+    
+    st.download_button(
+        label="Download",
+        data=csv,
+        file_name='inventory_data.csv',
+        mime='text/csv',
+    )
