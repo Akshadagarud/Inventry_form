@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import datetime as dt
 
-st.header("Inventry manager")
+st.header("Inventory manager")
 branch_name = st.text_input("Branch Name")
 loc, amcid = st.columns(2)
 loc.text_input("Location")
