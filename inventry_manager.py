@@ -33,17 +33,19 @@ uploaded_file = st.file_uploader("Upload File")
 if st.button("Save"):
     st.success("Data saved!")
 
-data = {
-    "Branch Name": [branch_name],
-    "Location": [location],
-    "AMC ID": [amcid],
-    "Machine Type": [machine_type],
-    "Model Name": [model_name],
-    "Model No.": [model_no],
-    "Specification": [specs],
-    "Warranty Status": [warranty_select],
-    "Warranty Date": [warranty_date_input]
-}
+data = {    
+        "loc": loc,
+        "serial_number": serial,
+        "branch_name": branch_name,
+        "user": user,
+        "machine_type": machine_type,
+        "model_name": model_name,
+        "model_no": model_no,
+        "specs": specs,
+        "file_url": upfiles[0] if upfiles else None,
+        "warranty_status": warranty_select,
+        "warranty_ends_on": warranty_date_input.isoformat() if warranty_date_input else None
+    }
 
 df = pd.DataFrame(data)
 
