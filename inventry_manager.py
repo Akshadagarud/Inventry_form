@@ -42,7 +42,6 @@ data = {
         "model_name": model_name,
         "model_no": model_no,
         "specs": specs,
-        "file_url": upfiles[0] if upfiles else None,
         "warranty_status": warranty_select,
         "warranty_ends_on": warranty_date_input.isoformat() if warranty_date_input else None
     }
