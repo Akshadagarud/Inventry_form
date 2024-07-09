@@ -6,7 +6,7 @@ st.header("Inventory Manager")
 branch_name = st.text_input("Branch Name")
 loc = st.text_input("Location")
 
-sr_col, user_col = st.columns(2)
+user_col, sr_col = st.columns(2)
 user = user_col.text_input("User Name")
 serial = sr_col.text_input("Serial No.")
 
