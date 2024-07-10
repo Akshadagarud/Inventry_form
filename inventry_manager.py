@@ -1,12 +1,6 @@
 import streamlit as st
 import pandas as pd
-from st_supabase_connection import SupabaseConnection, execute_query
 import datetime as dt
-
-# Supabase credentials
-st_supabase_client = st.connection(
-    "supabase",SupabaseConnection
-)
 
 st.header("Inventory Manager")
 branch_name = st.text_input("Branch Name")
@@ -38,13 +32,8 @@ else:
 uploaded_file = st.file_uploader("Upload File")
 
 if st.button("Save"):
-    upfiles = []
-    if uploaded_file is not None:
-        filename = "csv_files/"+str(dt.datetime.now())+uploaded_file.__getattribute__("name")
-        st_supabase_client.upload("csv_files", "local",uploaded_file , filename)
-        upfiles.append(filename)
-        st.write(uploaded_file.__getattribute__("name").split('.')[-1])
-
+    st.success("Data saved!")
+   
     data = {    
         "loc": loc,
         "serial_number": serial,
@@ -54,16 +43,9 @@ if st.button("Save"):
         "model_name": model_name,
         "model_no": model_no,
         "specs": specs,
-        "file_url": upfiles[0] if upfiles else None,
         "warranty_status": warranty_select,
-        "warranty_ends_on": warranty_date_input.isoformat() if warranty_date_input else None
+        "warranty_ends_on": warranty_date_input
     }
-    
-    try:
-        execute_query(st_supabase_client.table("inventory_management").insert(data),ttl=0,)
-        st.success("Data inserted successfully.")
-    except Exception as e:
-        st.error(f"Failed to insert data. Error: {e}")
 
     df = pd.DataFrame([data])
     csv = df.to_csv(index=False).encode()
